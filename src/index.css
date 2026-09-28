@@ -1,0 +1,287 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --shell: #12100c;
+    --shell-2: #1e1a14;
+    --parchment: #e8dcc0;
+    --parchment-2: #d8c3a5;
+    --ink: #2c1e12;
+    --oxblood: #6b1e2d;
+    --gold: #a9822f;
+    --gold-2: #d4a76a;
+    --ember: #9e2b25;
+    --verdigris: #3d5a45;
+    --angel-gold: #c9a227;
+
+    --background: 30 14% 6%;
+    --foreground: 40 33% 83%;
+    --card: 38 28% 11%;
+    --card-foreground: 40 33% 83%;
+    --popover: 38 28% 11%;
+    --popover-foreground: 40 33% 83%;
+    --primary: 38 45% 55%;
+    --primary-foreground: 30 14% 6%;
+    --secondary: 38 20% 16%;
+    --secondary-foreground: 40 33% 83%;
+    --muted: 38 20% 16%;
+    --muted-foreground: 38 18% 55%;
+    --accent: 38 20% 16%;
+    --accent-foreground: 40 33% 83%;
+    --destructive: 4 62% 38%;
+    --destructive-foreground: 40 33% 90%;
+    --border: 38 18% 22%;
+    --input: 38 18% 22%;
+    --ring: 38 45% 55%;
+    --radius: 0.25rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'EB Garamond', Georgia, serif;
+    background-color: var(--shell);
+  }
+}
+
+/* ── Typography helpers ─────────────────────────────────────────────── */
+.font-display {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.05em;
+}
+.font-fell {
+  font-family: 'IM Fell English', serif;
+}
+.font-body {
+  font-family: 'EB Garamond', Georgia, serif;
+}
+
+/* ── Dark shell: faint embossed sigil / noise ───────────────────────── */
+.shell-noise {
+  position: relative;
+}
+.shell-noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Parchment card: grain + vignette ───────────────────────────────── */
+.parchment {
+  position: relative;
+  background-color: var(--parchment);
+  color: var(--ink);
+}
+.parchment::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.09;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+.parchment::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(44, 30, 18, 0.14) 88%,
+    rgba(44, 30, 18, 0.28) 100%
+  );
+}
+.parchment > * {
+  position: relative;
+  z-index: 1;
+}
+
+.parchment-dark {
+  background-color: var(--parchment-2);
+}
+
+/* ── Tapered rule: transparent → gold → transparent ─────────────────── */
+.rule-tapered {
+  position: relative;
+  height: 1px;
+  border: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold) 25%,
+    var(--gold-2) 50%,
+    var(--gold) 75%,
+    transparent
+  );
+}
+.rule-tapered::after {
+  content: '';
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  top: -0.5px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-2), transparent);
+}
+
+/* ── Engraved double-rule portrait frame ────────────────────────────── */
+.frame-engraved {
+  border: 1px solid var(--gold);
+  outline: 1px solid var(--gold);
+  outline-offset: 4px;
+  box-shadow:
+    0 0 0 1px rgba(44, 30, 18, 0.6),
+    inset 0 0 0 1px rgba(44, 30, 18, 0.4),
+    0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* ── Wax seal ───────────────────────────────────────────────────────── */
+.wax-seal {
+  border-radius: 47% 53% 51% 49% / 54% 46% 55% 45%;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 244, 220, 0.92);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.55);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.14),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.45),
+    0 3px 8px rgba(0, 0, 0, 0.5);
+  transition: filter 0.3s ease;
+}
+.wax-seal-demon {
+  background: radial-gradient(circle at 35% 30%, #8a2a3c, var(--oxblood) 55%, #45121d);
+}
+.wax-seal-angel {
+  background: radial-gradient(circle at 35% 30%, #e0bd4e, var(--angel-gold) 55%, #7a6314);
+  color: rgba(38, 28, 6, 0.92);
+  text-shadow: 0 1px 0 rgba(255, 240, 200, 0.35);
+}
+.wax-seal:hover {
+  animation: candle-flicker 1.6s ease-in-out infinite;
+}
+@keyframes candle-flicker {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  30% {
+    filter: brightness(1.12);
+  }
+  55% {
+    filter: brightness(0.94);
+  }
+  75% {
+    filter: brightness(1.08);
+  }
+}
+
+/* ── Sidebar row hover: sigil rotates, background shifts ────────────── */
+.sidebar-row {
+  transition: background-color 0.25s ease;
+}
+.sidebar-row:hover {
+  background-color: rgba(169, 130, 47, 0.1);
+}
+.sidebar-row .sigil-thumb {
+  transition: transform 0.35s ease;
+}
+.sidebar-row:hover .sigil-thumb {
+  transform: rotate(-4deg) scale(1.06);
+}
+
+/* ── Słabość pull-out box ───────────────────────────────────────────── */
+.weakness-box {
+  background-color: var(--parchment-2);
+  border-left: 4px solid var(--ember);
+  box-shadow: inset 0 0 24px rgba(44, 30, 18, 0.12);
+}
+
+/* ── Historia drop cap ──────────────────────────────────────────────── */
+.dropcap::first-letter {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 3.4em;
+  line-height: 0.82;
+  float: left;
+  padding: 0.06em 0.12em 0 0;
+  color: var(--oxblood);
+}
+
+/* ── Small-caps section labels ──────────────────────────────────────── */
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-variant: small-caps;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+}
+
+/* ── Scrollbars ─────────────────────────────────────────────────────── */
+.scroll-slim::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-slim::-webkit-scrollbar-track {
+  background: var(--shell-2);
+}
+.scroll-slim::-webkit-scrollbar-thumb {
+  background: #3a3226;
+  border-radius: 4px;
+}
+.scroll-slim::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* ── Lore body text ─────────────────────────────────────────────────── */
+.lore-body {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 17.5px;
+  line-height: 1.65;
+}
+
+/* ── Chip buttons ───────────────────────────────────────────────────── */
+.chip {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: #b8a888;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+  white-space: nowrap;
+}
+.chip:hover {
+  border-color: var(--gold);
+  color: var(--gold-2);
+}
+.chip[data-active='true'] {
+  background-color: var(--oxblood);
+  border-color: var(--oxblood);
+  color: #f2e6cd;
+}
+.chip[data-active='true'].chip-angel {
+  background-color: var(--angel-gold);
+  border-color: var(--angel-gold);
+  color: #241a06;
+}
